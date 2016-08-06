@@ -188,3 +188,6 @@ fabric.properties
 # modules.xml
 # .idea/misc.xml 
 # *.ipr
+
+# Mac thing
+.DS_Store

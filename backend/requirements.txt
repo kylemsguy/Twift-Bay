@@ -10,6 +10,7 @@ itsdangerous==0.24
 Jinja2==2.8
 Mako==1.0.4
 MarkupSafe==0.23
+numpy==1.11.1
 oauthlib==1.1.2
 psycopg2==2.6.2
 pysolr==3.5.0

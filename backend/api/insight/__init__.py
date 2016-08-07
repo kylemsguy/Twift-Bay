@@ -6,12 +6,9 @@ class Insight:
     @staticmethod
     def personality_distance(insight_u, insight_v):
         weights = [0.5, 0.3, 0.2]
-
-        data_u = open(insight_u)
-        data_v = open(insight_v)
         
-        json_u = json.load(data_u)
-        json_v = json.load(data_v)
+        json_u = json.loads(insight_u)
+        json_v = json.loads(insight_v)
         
         tree_u = json_u['tree']['children']
         tree_v = json_v['tree']['children']
@@ -43,8 +40,7 @@ class Insight:
 
     @staticmethod
     def personality_traits(product_insight):
-        data_product = open(product_insight)
-        json_product = json.load(data_product)
+        json_product = json.loads(product_insight)
         tree_product = json_product['tree']['children']
 
         personality_product = tree_product[0]

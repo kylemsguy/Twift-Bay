@@ -29,7 +29,13 @@ def get_suggestions():
     tweet_data = _get_tweet_data()
     model = m.EbayProduct.query
     for i in model:
-        model[i.product_id] = Insight.personality_distance(tweet_data, i.personality_data)
+        model[i.product_id] = {
+            'product_id': i.product_id,
+            'product_name': i.product_name,
+            'personality_distance': Insight.personality_distance(
+                tweet_data, i.personality_data
+            ),
+        }
 
     
 
@@ -59,6 +65,10 @@ def get_ebay_data():
         data = bluemix.analyse_text(product_data['reviews'])
         model = m.EbayProduct()
         model.product_id = i
+        model.product_name = product_data['product']
+        model.product_price = product_data['price']
+        model.product_img_link = product_data['image']
+        model.product_url = product_data['abs_url']
         model.personality_data = data
         db.session.add(model)
         db.session.commit()

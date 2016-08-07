@@ -10,7 +10,7 @@ class EbayScrapper:
         html = r.text
         soup = BeautifulSoup(html, 'html.parser')
         product_name = soup.h1.text
-        price = soup.find_all('span', class_='price')[0].text
+        price = soup.find_all('span', class_='price')[0].text.strip('$')
         image = soup.find_all('span', class_='cc-image-component')[0].img.get('src')
 
         target = 'http://www.ebay.com/urw/product-reviews/' + product_id

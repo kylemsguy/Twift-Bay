@@ -54,11 +54,15 @@ Traits.TraitsController = Ember.ArrayController.extend({
 	// 							],
 	actions: {
 		sendTwitterHandle: function(){
+			var self = this;
 			var twitterHandle = this.get("inputValue");
 			this.toggleProperty('displayResults');
-			var endpoint = "http://develop.bbksn7idtq.us-east-1.elasticbeanstalk.com/api/suggest-gift?user=" + twitterHandle;
+			var endpoint = "/api/suggest-gift?user=" + twitterHandle;
 			console.log(endpoint);
 			console.log($.getJSON(endpoint));
+			$.getJSON(endpoint, function(data){
+				self.set('products', data.responseJSON);
+			});
 			// this.transitionToRoute('result');
 		},
 		clickTryAgain: function(){

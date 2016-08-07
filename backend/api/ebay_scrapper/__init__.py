@@ -13,6 +13,7 @@ class EbayScrapper:
         price = (soup.find_all('span', class_='price')[0]
                  .text.strip('$').replace(',', ''))
         image = soup.find_all('span', class_='cc-image-component')[0].img.get('src')
+        description = soup.find_all('div', class_='s-value')[1].text
 
         target = 'http://www.ebay.com/urw/product-reviews/' + product_id
         target += '?pgn='
@@ -44,5 +45,6 @@ class EbayScrapper:
             'price': price,
             'image': image,
             'abs_url': abs_link,
+            'description': description,
             'reviews': blob
         }

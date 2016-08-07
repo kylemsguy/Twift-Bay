@@ -40,3 +40,20 @@ class Insight:
         weighted_distance = sum(np.multiply(factors, weights))
 
         return weighted_distance
+
+    @staticmethod
+    def personality_traits(product_insight):
+        data_product = open(product_insight)
+        json_product = json.load(data_product)
+        tree_product = json_product['tree']['children']
+
+        personality_product = tree_product[0]
+        consumer_needs_product = tree_product[1]
+        values_product = tree_product[2]
+
+        traits = []
+        traits.append(personality_product['children'][0]['name'])
+        traits.append(consumer_needs_product['children'][0]['name'])
+        traits.append(values_product['children'][0]['name'])
+
+        return traits

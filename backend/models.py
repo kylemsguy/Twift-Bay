@@ -17,3 +17,5 @@ class EbayProduct(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     product_id = db.Column(db.Integer, index=True, nullable=False, unique=True)
     personality_data = db.Column(JSON)
+    times_suggested = db.Column(db.Integer, default=0)
+    times_clicked = db.Column(db.Integer, default=0)

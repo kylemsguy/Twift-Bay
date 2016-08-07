@@ -6,6 +6,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 
 import bluemix
 import twitter
+import ebay
 from env_vars import get_env_var
 
 
@@ -20,9 +21,36 @@ import models as m
 def home():
     return "HAI WRLD!"
 
+@application.route('/api/suggest-gift', methods=['GET'])
+def get_suggestions():
+    tweet_data = _get_tweet_data()
 
-@application.route('/twitter', methods=['GET'])
+
+# This is just a debug endpoint
+@application.route('/api/twitter', methods=['GET'])
 def request_tweet_data():
+    return _get_tweet_data()
+
+# Another debug endpoint
+@application.route('/api/ebay', methods=['POST'])
+def get_ebay_data():
+    added_objs = []
+    item_ids = json.loads(request.args['item_ids'])
+    for i in item_ids:
+        model = m.TwitterUser.query.filter_by(product_id=i).first()
+        if model:
+            print("Skipping already added product with id {}".format(i))
+            continue
+        product_data = ebay.get_ebay_data(i)
+        data = bluemix.analyse_text(product_data['reviews'])
+        model = m.TwitterUser()
+        model.product_id = i
+        model.personality_data = data
+        added_objs.append(data)
+
+    return json.dumps(added_objs)
+
+def _get_tweet_data():
     username = request.args['user']
     model = m.TwitterUser.query.filter_by(user_id=username).first()
     if not model:
@@ -39,6 +67,10 @@ def request_tweet_data():
         data = model.personality_data
 
     return data
+
+def _get_ebay_data(tweet_data):
+    '''Get 100 or whatever closest ebay products'''
+    pass
 
 if __name__ == '__main__':
     application.debug = True

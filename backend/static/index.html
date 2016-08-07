@@ -4,9 +4,9 @@
 	<link rel="stylesheet" type="text/css" href="css/main.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
 </head>
-<body class="">
+<body onload="document.body.style.opacity='1'">
 	<script type="text/x-handlebars" data-template-name="traits">
-		<h1 class="container center-align">PLACEHOLDER TITLE</h1>
+		<h1 class="container center-align">TWIFT BAY</h1>
 		<section id="app" {{bind-attr class=":valign-wrapper displayResults:hide:show"}}>
 	 	 	<div class="container center-align">
 	 	 		<div class="row valign">
@@ -17,7 +17,8 @@
 					 	class="input-field active"
 					 	id="twitterHandle"
 					 	value=inputValue
-					 	action="sendTwitterHandle"}}
+					 	action="sendTwitterHandle"
+					 	autofocus=true}}
 	 	 			</div>
 	 	 			<div class="col s3"></div>
 		 	 	</div>		
@@ -36,19 +37,19 @@
 					      	</div>
 					      	<div class="card-stacked">
 					        	<div class="card-content">
-					          		<p>{Description}</p>
+					          		<p class="left-align">{Description}</p>
 					        	</div>
 					        	<div class="card-action">
-					          		<a href="#">{Purchase Now}</a>
+					          		<a class="left-align" href="#">{Purchase Now} {$price}</a>
 					        	</div>
 					      	</div>
 					    </div>
 					</div>
 				</div>
-				{{#each trait in model}}
-					<div {{bind-attr class=":left-align trait.isAvailable:show"}}>{{trait.title}}
+				{{#each trait in personality}}
+					<div {{bind-attr class=":left-align trait.isAvailable:show"}}>{{trait.id}}
 						<div class="bar"></div>
-						<div>{{trait.score}}</div>
+						<div>{{trait.percentage}}%</div>
 					</div>
 				{{/each}}
 				<a {{action "clickTryAgain"}} class="waves-effect waves-light btn">TRY AGAIN</a>
@@ -65,5 +66,6 @@
 	<script src="js/router.js"></script>
 	<script src="js/models/traits.js"></script>
 	<script src="js/controllers/traits_controller.js"></script>
+	
 </body>
 </html>

@@ -1,12 +1,12 @@
 <html>
 <head>
-	<title>Placeholder Name</title>
+	<title>Twift Bay</title>
 	<link rel="stylesheet" type="text/css" href="css/main.css">
 	<link rel="stylesheet" type="text/css" href="css/materialize.min.css">
 </head>
 <body onload="document.body.style.opacity='1'">
 	<script type="text/x-handlebars" data-template-name="traits">
-		<h1 class="container center-align">TWIFT BAY</h1>
+		<h1 class="font-big container center-align">TWIFT BAY</h1>
 		<section id="app" {{bind-attr class=":valign-wrapper displayResults:hide:show"}}>
 	 	 	<div class="container center-align">
 	 	 		<div class="row valign">
@@ -14,7 +14,7 @@
 	 	 			<div class="col s6">
 	 	 				{{input
 					 	type="text"
-					 	class="input-field active"
+					 	class="font-med input-field active"
 					 	id="twitterHandle"
 					 	value=inputValue
 					 	action="sendTwitterHandle"
@@ -39,7 +39,7 @@
 						      	</div>
 						      	<div class="card-stacked">
 						        	<div class="card-content">
-						          		<p class="left-align">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus volutpat lacinia dolor, vel luctus libero congue at. Proin leo ligula, tempor id facilisis quis, laoreet a orci. Etiam vel commodo ipsum</p>
+						          		<p class="left-align">{{product.product_description}}</p>
 						        	</div>
 						        	<div class="card-action">
 						          		<a class="left-align" {{action "clickBuy" product.product_id}} {{bind-attr href="product.product_url"}}>Purchase ${{product.product_price}}</a>

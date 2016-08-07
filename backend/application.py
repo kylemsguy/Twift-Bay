@@ -1,7 +1,7 @@
 import unicodedata
 import json
 
-from flask import Flask, request, abort
+from flask import Flask, request, abort, send_from_directory
 from flask.ext.sqlalchemy import SQLAlchemy
 
 import bluemix
@@ -11,7 +11,7 @@ from api.insight import Insight
 from env_vars import get_env_var
 
 
-application = Flask(__name__)
+application = Flask(__name__, static_url_path='')
 application.config['SQLALCHEMY_DATABASE_URI'] = get_env_var('DATABASE_URL')
 db = SQLAlchemy(application)
 
@@ -20,8 +20,7 @@ import models as m
 
 @application.route('/')
 def home():
-    return "HAI WRLD!"
-
+    return application.send_static_file('index.html')
 
 @application.route('/api/suggest-gift', methods=['GET'])
 def get_suggestions():

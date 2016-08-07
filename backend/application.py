@@ -10,9 +10,11 @@ import twitter
 from env_vars import get_env_var
 
 
-SQLALCHEMY_DATABASE_URI = get_env_var('DATABASE_URL')
 application = Flask(__name__)
+application.config['SQLALCHEMY_DATABASE_URI'] = get_env_var('DATABASE_URL')
 db = SQLAlchemy(application)
+
+from models import TwitterUser, EbayProduct
 
 
 @application.route('/')

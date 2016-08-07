@@ -18,7 +18,7 @@ class EbayScrapper:
         page_number = 1
         blob = ''
 
-        while page_number <= 20:
+        while page_number:
             r = requests.get(target + str(page_number))
             html = r.text
             soup = BeautifulSoup(html, 'html.parser')

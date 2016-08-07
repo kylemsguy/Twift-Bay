@@ -1,8 +1,7 @@
 import unicodedata
-import sqlite3
 import json
 
-from flask import Flask, request, g
+from flask import Flask, request
 from flask.ext.sqlalchemy import SQLAlchemy
 
 import bluemix
@@ -14,7 +13,7 @@ application = Flask(__name__)
 application.config['SQLALCHEMY_DATABASE_URI'] = get_env_var('DATABASE_URL')
 db = SQLAlchemy(application)
 
-from models import TwitterUser, EbayProduct
+import models as m
 
 
 @application.route('/')
@@ -25,10 +24,21 @@ def home():
 @application.route('/twitter', methods=['GET'])
 def request_tweet_data():
     username = request.args['user']
-    tweets = twitter.get_tweets(username)
-    text = unicodedata.normalize('NFKC', '\n'.join(tweets))
-    data = bluemix.analyse_text(text)
-    return json.dumps(data)
+    model = m.TwitterUser.query.filter_by(user_id=username).first()
+    if not model:
+        tweets = twitter.get_tweets(username)
+        text = unicodedata.normalize('NFKC', '\n'.join(tweets))
+        data = bluemix.analyse_text(text)
+        model = m.TwitterUser()
+        model.user_id = username
+        model.personality_data = json.dumps(data)
+        db.session.add(model)
+        db.session.commit()
+        data = json.dumps(data)
+    else:
+        data = model.personality_data
+
+    return data
 
 if __name__ == '__main__':
     application.debug = True

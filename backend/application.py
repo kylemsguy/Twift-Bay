@@ -36,7 +36,7 @@ def get_suggestions():
             'product_url': i.product_url,
             'personality_distance': Insight.personality_distance(
                 tweet_data, json.dumps(i.personality_data),
-            ) - (0.5 * i.times_clicked / (i.times_suggested+1)),
+            ) - (0.1 * min(i.times_clicked, i.times_suggested) / (i.times_suggested+1)),
             'personality_data': i.personality_data,
         })
 

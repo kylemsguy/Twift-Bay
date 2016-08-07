@@ -1,13 +1,16 @@
+import unicodedata
 import sqlite3
+import json
 
-from flask import Flask, jsonify, request, g
+from flask import Flask, request, g
 
-from env_vars import get_env_var
 import bluemix
+import twitter
+from env_vars import get_env_var
 
 DATABASE = './database.db'
 
-app = Flask(__name__)
+application = Flask(__name__)
 
 
 def get_db():
@@ -17,23 +20,27 @@ def get_db():
     return db
 
 
-@app.teardown_appcontext
+@application.teardown_appcontext
 def close_connection(exception):
     db = getattr(g, '_database', None)
     if db is not None:
         db.close()
 
 
-@app.route('/')
+@application.route('/')
 def home():
     return "HAI WRLD!"
 
 
-@app.route('/anatweet', methods=['GET'])
+@application.route('/twitter', methods=['GET'])
 def request_tweet_data():
-    data = bluemix.analyse_text(request.args['text'])
-    return jsonify(**data)
+    username = request.args['user']
+    tweets = twitter.get_tweets(username)
+    text = unicodedata.normalize('NFKC', '\n'.join(tweets))
+    data = bluemix.analyse_text(text)
+    return json.dumps(data)
 
 
 if __name__ == '__main__':
-    app.run()
+    application.debug = True
+    application.run()

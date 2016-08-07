@@ -12,6 +12,9 @@ h1 {
 	padding-top: 1.5em;
 }
 
+label {
+	display: inline-block;
+}
 .hide {
 	display:none;
 }

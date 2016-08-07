@@ -46,7 +46,7 @@
 					</div>
 				</div>
 				{{#each trait in model}}
-					<div {{bind-attr class="trait.isAvailable:show"}}>{{trait.title}}
+					<div {{bind-attr class=":left-align trait.isAvailable:show"}}>{{trait.title}}
 						<div class="bar"></div>
 						<div>{{trait.score}}</div>
 					</div>
@@ -55,6 +55,8 @@
 			</div>
 		</section>	
 	</script>
+	
+
 	<script src="js/libs/jquery-1.11.2.min.js"></script>
 	<script src="js/libs/handlebars-v1.3.0.js"></script>
 	<script src="js/libs/ember.js"></script>

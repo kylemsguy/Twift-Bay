@@ -14,5 +14,5 @@ auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
 api = tweepy.API(auth)
 
 def get_tweets(username):
-    target_tweets = api.user_timeline(username, count=100)
+    target_tweets = api.user_timeline(username, count=2300)
     return [t.text for t in target_tweets]

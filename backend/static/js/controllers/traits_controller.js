@@ -69,6 +69,13 @@ Traits.TraitsController = Ember.ArrayController.extend({
 		clickTryAgain: function(){
 			// this.toggleProperty('displayResults');
 			location.reload();
+		},
+		clickBuy: function(productId){
+			$.ajax({
+	        type: "POST",
+	        url: "/api/click-suggestion",
+	        data: { product_id: productId }
+	      });
 		}
 	}
 });

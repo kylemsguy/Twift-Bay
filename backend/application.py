@@ -76,6 +76,17 @@ def get_distance():
 
     return str(Insight.personality_distance(twitter_data, json.dumps(model.personality_data)))
 
+@application.route('/api/click-suggestion', methods=['POST'])
+def clicked_item():
+    product_id = request.args['product_id']
+    model = m.EbayProduct.query.filter_by(product_id=product_id).first()
+    if not model:
+        abort(400)
+
+    model.times_clicked += 1
+    db.session.commit()
+
+    return "Success!"
 
 # This is just a debug endpoint
 @application.route('/api/twitter', methods=['GET'])

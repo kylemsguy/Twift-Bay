@@ -57,11 +57,11 @@ Traits.TraitsController = Ember.ArrayController.extend({
 			var twitterHandle = this.get("inputValue");
 			this.toggleProperty('displayResults');
 			var endpoint = "/api/suggest-gift?user=" + twitterHandle;
-			console.log(endpoint);
-			console.log($.getJSON(endpoint));
+			$.getJSON(endpoint);
 
 			$.getJSON(endpoint, function(data){
-				self.set('products', data.responseJSON);
+				console.log(data)
+				self.set('products', data);
 			});
 
 			// this.transitionToRoute('result');

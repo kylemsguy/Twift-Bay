@@ -7,6 +7,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 import bluemix
 import twitter
 from api.ebay_scrapper import EbayScrapper
+from api.insight import Insight
 from env_vars import get_env_var
 
 
@@ -23,7 +24,14 @@ def home():
 
 @application.route('/api/suggest-gift', methods=['GET'])
 def get_suggestions():
+    twitter_user = request.args['user']
+    pid_to_distance = {}
     tweet_data = _get_tweet_data()
+    model = m.EbayProduct.query
+    for i in model:
+        model[i.product_id] = Insight.personality_distance(tweet_data, i.personality_data)
+
+    
 
 
 # This is just a debug endpoint

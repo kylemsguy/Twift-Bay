@@ -11,6 +11,7 @@ Using textual analysis of personality insights with Watson, we're able to pick t
 ### Technology Stack
 
 - [Twitter API](https://dev.twitter.com/overview/documentation) (tweets)
+- [eBay](http://ebay.com) (platform)
 - [IBM Watson](https://personality-insights-livedemo.mybluemix.net/) (personality insight)
 - [Flask](http://flask.pocoo.org/) (api server)
 - [Ember](http://emberjs.com/) (frontend)

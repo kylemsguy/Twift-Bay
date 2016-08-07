@@ -13,8 +13,10 @@ class EbayScrapper:
         price = (soup.find_all('span', class_='price')[0]
                  .text.strip('$').replace(',', ''))
         image = soup.find_all('span', class_='cc-image-component')[0].img.get('src')
-        description = soup.find_all('div', class_='s-value')[1].text
-
+        description = "N/A"
+        des = soup.find_all('div', class_='s-value')
+        if len(des) > 1:
+            description = des[1].text
         target = 'http://www.ebay.com/urw/product-reviews/' + product_id
         target += '?pgn='
         page_number = 1

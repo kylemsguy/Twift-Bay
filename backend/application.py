@@ -3,28 +3,16 @@ import sqlite3
 import json
 
 from flask import Flask, request, g
+from flask.ext.sqlalchemy import SQLAlchemy
 
 import bluemix
 import twitter
 from env_vars import get_env_var
 
-DATABASE = './database.db'
 
+SQLALCHEMY_DATABASE_URI = get_env_var('DATABASE_URL')
 application = Flask(__name__)
-
-
-def get_db():
-    db = getattr(g, '_database', None)
-    if db is None:
-        db = g._database = sqlite3.connect(DATABASE)
-    return db
-
-
-@application.teardown_appcontext
-def close_connection(exception):
-    db = getattr(g, '_database', None)
-    if db is not None:
-        db.close()
+db = SQLAlchemy(application)
 
 
 @application.route('/')
@@ -39,7 +27,6 @@ def request_tweet_data():
     text = unicodedata.normalize('NFKC', '\n'.join(tweets))
     data = bluemix.analyse_text(text)
     return json.dumps(data)
-
 
 if __name__ == '__main__':
     application.debug = True

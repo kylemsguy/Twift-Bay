@@ -36,14 +36,14 @@ def get_suggestions():
             'product_price': i.product_price,
             'product_url': i.product_url,
             'personality_distance': Insight.personality_distance(
-                tweet_data, i.personality_data
-            ) - (0.5 * i.times_clicked / i.times_suggested),
+                tweet_data, json.dumps(i.personality_data),
+            ) - (0.5 * i.times_clicked / (i.times_suggested+1)),
             'personality_data': i.personality_data,
         })
 
     ret_val.sort(key=lambda x: x['personality_distance'])
 
-    to_return = json.dumps(ret_val[:10])
+    to_return = ret_val[:10]
 
     update_query = m.EbayProduct.query.filter(
         m.EbayProduct.product_id.in_([x['product_id'] for x in to_return])
@@ -54,7 +54,7 @@ def get_suggestions():
 
     db.session.commit()
 
-    return to_return
+    return json.dumps(to_return)
 
 
 @application.route('/api/query-product', methods=['GET'])

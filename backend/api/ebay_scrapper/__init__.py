@@ -9,15 +9,16 @@ class EbayScrapper:
         r = requests.get('http://www.ebay.com/p/' + product_id)
         html = r.text
         soup = BeautifulSoup(html, 'html.parser')
-        product_name = soup.find_all('div', class_='product-header')[0].h1.text
-        price = float(soup.find_all('meta', itemprop='price')[0].get('content'))
+        product_name = soup.h1.text
+        price = soup.find_all('span', class_='price')[0].text
+        image = soup.find_all('span', class_='cc-image-component')[0].img.get('src')
 
         target = 'http://www.ebay.com/urw/product-reviews/' + product_id
         target += '?pgn='
         page_number = 1
         blob = ''
 
-        while page_number <= 5:
+        while page_number <= 20:
             r = requests.get(target + str(page_number))
             html = r.text
             soup = BeautifulSoup(html, 'html.parser')
@@ -39,5 +40,6 @@ class EbayScrapper:
         return {
             'product': product_name,
             'price': price,
+            'image': image,
             'reviews': blob
         }

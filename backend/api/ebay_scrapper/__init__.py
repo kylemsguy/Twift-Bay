@@ -37,9 +37,11 @@ class EbayScrapper:
                 blob += title + ' ' + body + '\n\n'
             page_number += 1
 
+        abs_link = 'http://www.ebay.com/p/' + product_id
         return {
             'product': product_name,
             'price': price,
             'image': image,
+            'abs_url': abs_link,
             'reviews': blob
         }

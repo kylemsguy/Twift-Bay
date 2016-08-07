@@ -27,16 +27,31 @@
 		<section id="results" {{bind-attr class="displayResults:show:hide"}}>
 			<div class="container center-align">
 				<h1>Result</h1>
-				<div id="productListing"></div>
+				<div id="productListing">
+					<div class="col s12 m7">
+					    <h2 class="header">{Product Name}</h2>
+					    <div class="card horizontal">
+					      	<div class="card-image">
+					      		<img src="http://lorempixel.com/100/190/nature/10">
+					      	</div>
+					      	<div class="card-stacked">
+					        	<div class="card-content">
+					          		<p>{Description}</p>
+					        	</div>
+					        	<div class="card-action">
+					          		<a href="#">{Purchase Now}</a>
+					        	</div>
+					      	</div>
+					    </div>
+					</div>
+				</div>
 				{{#each trait in model}}
 					<div {{bind-attr class="trait.isAvailable:show"}}>{{trait.title}}
 						<div class="bar"></div>
 						<div>{{trait.score}}</div>
 					</div>
 				{{/each}}
-				<button id="tryAgain" {{action "clickTryAgain"}} >
-					TRY AGAIN
-				</button>
+				<a {{action "clickTryAgain"}} class="waves-effect waves-light btn">TRY AGAIN</a>
 			</div>
 		</section>	
 	</script>

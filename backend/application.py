@@ -1,7 +1,7 @@
 import unicodedata
 import json
 
-from flask import Flask, request
+from flask import Flask, request, abort
 from flask.ext.sqlalchemy import SQLAlchemy
 
 import bluemix
@@ -35,18 +35,24 @@ def request_tweet_data():
 @application.route('/api/ebay', methods=['POST'])
 def get_ebay_data():
     added_objs = []
-    item_ids = json.loads(request.args['item_ids'])
+    item_ids = request.get_json()
+    if not item_ids:
+        abort(400)
     for i in item_ids:
-        model = m.TwitterUser.query.filter_by(product_id=i).first()
+        model = m.EbayProduct.query.filter_by(product_id=i).first()
         if model:
             print("Skipping already added product with id {}".format(i))
+            added_objs.append(model.personality_data)
             continue
         product_data = ebay.get_ebay_data(i)
         data = bluemix.analyse_text(product_data['reviews'])
-        model = m.TwitterUser()
+        model = m.EbayProduct()
         model.product_id = i
         model.personality_data = data
+        db.session.add(model)
+        db.session.commit()
         added_objs.append(data)
+        print("Added new product with id {}".format(i))
 
     return json.dumps(added_objs)
 

@@ -1,0 +1,69 @@
+<html>
+<head>
+	<title>Placeholder Name</title>
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
+</head>
+<body class="">
+	<script type="text/x-handlebars" data-template-name="traits">
+		<h1 class="container center-align">PLACEHOLDER TITLE</h1>
+		<section id="app" {{bind-attr class=":valign-wrapper displayResults:hide:show"}}>
+	 	 	<div class="container center-align">
+	 	 		<div class="row valign">
+	 	 			<div class="col s3"></div>
+	 	 			<div class="col s6">
+	 	 				{{input
+					 	type="text"
+					 	class="input-field active"
+					 	id="twitterHandle"
+					 	value=inputValue
+					 	action="sendTwitterHandle"}}
+	 	 			</div>
+	 	 			<div class="col s3"></div>
+		 	 	</div>		
+	 	 	</div>
+		</section>
+
+		<section id="results" {{bind-attr class="displayResults:show:hide"}}>
+			<div class="container center-align">
+				<h1>Result</h1>
+				<div id="productListing">
+					<div class="col s12 m7">
+					    <h2 class="header">{Product Name}</h2>
+					    <div class="card horizontal">
+					      	<div class="card-image">
+					      		<img src="http://lorempixel.com/100/190/nature/10">
+					      	</div>
+					      	<div class="card-stacked">
+					        	<div class="card-content">
+					          		<p>{Description}</p>
+					        	</div>
+					        	<div class="card-action">
+					          		<a href="#">{Purchase Now}</a>
+					        	</div>
+					      	</div>
+					    </div>
+					</div>
+				</div>
+				{{#each trait in model}}
+					<div {{bind-attr class=":left-align trait.isAvailable:show"}}>{{trait.title}}
+						<div class="bar"></div>
+						<div>{{trait.score}}</div>
+					</div>
+				{{/each}}
+				<a {{action "clickTryAgain"}} class="waves-effect waves-light btn">TRY AGAIN</a>
+			</div>
+		</section>	
+	</script>
+	
+
+	<script src="js/libs/jquery-1.11.2.min.js"></script>
+	<script src="js/libs/handlebars-v1.3.0.js"></script>
+	<script src="js/libs/ember.js"></script>
+	<script src="js/libs/ember-data.js"></script>
+	<script src="js/application.js"></script>
+	<script src="js/router.js"></script>
+	<script src="js/models/traits.js"></script>
+	<script src="js/controllers/traits_controller.js"></script>
+</body>
+</html>

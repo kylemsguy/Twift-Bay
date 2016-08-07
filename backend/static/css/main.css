@@ -1,0 +1,11 @@
+h1 {
+	padding-top: 1.5em;
+}
+
+.hide {
+	display:none;
+}
+
+.show {
+	display:block;
+}

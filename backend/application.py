@@ -6,7 +6,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 
 import bluemix
 import twitter
-import ebay
+from api.ebay_scrapper import EbayScrapper
 from env_vars import get_env_var
 
 
@@ -42,16 +42,22 @@ def get_ebay_data():
         model = m.EbayProduct.query.filter_by(product_id=i).first()
         if model:
             print("Skipping already added product with id {}".format(i))
-            added_objs.append(model.personality_data)
+            added_objs.append({
+                'product_id': model.product_id,
+                'personality_data': model.personality_data,
+            })
             continue
-        product_data = ebay.get_ebay_data(i)
+        product_data = EbayScrapper.scrape(i)
         data = bluemix.analyse_text(product_data['reviews'])
         model = m.EbayProduct()
         model.product_id = i
         model.personality_data = data
         db.session.add(model)
         db.session.commit()
-        added_objs.append(data)
+        added_objs.append({
+            'product_id': i,
+            'personality_data': data,
+        })
         print("Added new product with id {}".format(i))
 
     return json.dumps(added_objs)

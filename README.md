@@ -6,7 +6,7 @@ Project for [Major League Hacking Prime Spring Finale 2016](https://prime.mlh.io
 
 ### Description
 
-Using textual analysis of personality insights with Watson, we're able to pick the perfect gift on eBay using tweets. It also uses the user's feedback to priority popular items, and increase its likelyhood of showing up on future suggestions list.
+Using textual analysis of personality insights with Watson, pick the perfect gifts on eBay using tweets. It also uses the user's feedback to priority popular items, and increase its likelyhood of showing up on future suggestions list.
 
 ### Stack
 

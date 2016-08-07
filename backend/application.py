@@ -34,6 +34,7 @@ def get_suggestions():
             'product_img_link': i.product_img_link,
             'product_price': i.product_price,
             'product_url': i.product_url,
+            'product_description': i.product_description,
             'personality_distance': Insight.personality_distance(
                 tweet_data, json.dumps(i.personality_data),
             ) - (0.1 * min(i.times_clicked, i.times_suggested) / (i.times_suggested+1)),
@@ -69,6 +70,7 @@ def get_distance():
         model.product_name = product_data['product']
         model.product_price = product_data['price']
         model.product_img_link = product_data['image']
+        model.product_description = product_data['description']
         model.product_url = product_data['abs_url']
         model.personality_data = personality_data
         db.session.add(model)
@@ -116,6 +118,7 @@ def get_ebay_data():
         model.product_name = product_data['product']
         model.product_price = product_data['price']
         model.product_img_link = product_data['image']
+        model.product_description = product_data['description']
         model.product_url = product_data['abs_url']
         model.personality_data = data
         db.session.add(model)

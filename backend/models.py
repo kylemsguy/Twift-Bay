@@ -19,6 +19,7 @@ class EbayProduct(db.Model):
     product_name = db.Column(db.String())
     product_price = db.Column(db.Float)
     product_img_link = db.Column(db.String())
+    product_description = db.Column(db.String(), default='')
     product_url = db.Column(db.String())
     personality_data = db.Column(JSON)
     times_suggested = db.Column(db.Integer, default=0)
